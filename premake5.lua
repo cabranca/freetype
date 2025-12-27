@@ -2,6 +2,7 @@ project "FreeType"
     kind "StaticLib"
     language "C"
     staticruntime "on" -- Importante para que coincida con tu Engine
+    warnings "Off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -54,9 +55,8 @@ project "FreeType"
         "include/freetype/config/*.h"
     }
 
-    includedirs {
-        "include"
-    }
+
+    externalincludedirs { "include" }
 
     defines {
         "FT2_BUILD_LIBRARY" -- Necesario para compilar la lib interna
@@ -75,6 +75,15 @@ project "FreeType"
         pic "on"
         files {
             "src/base/ftsystem.c", -- Usamos la genérica ANSI C para evitar líos de configuración en Linux sin autoconf
+            "src/base/ftdebug.c"
+        }
+
+    filter "system:macosx"
+        systemversion "latest"
+        pic "on"
+        
+        files {
+            "src/base/ftsystem.c",
             "src/base/ftdebug.c"
         }
 
