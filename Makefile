@@ -29,7 +29,7 @@ ifeq ($(origin AR), default)
 endif
 RESCOMP = windres
 DEFINES += -DFT2_BUILD_LIBRARY
-INCLUDES += -Iinclude
+INCLUDES += -isystem include
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -47,16 +47,16 @@ ifeq ($(config),debug)
 TARGETDIR = bin/Debug-linux-x86_64/FreeType
 TARGET = $(TARGETDIR)/libFreeType.a
 OBJDIR = bin-int/Debug-linux-x86_64/FreeType
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -g
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -g
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -g -w
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -fPIC -g -w
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64
 
 else ifeq ($(config),release)
 TARGETDIR = bin/Release-linux-x86_64/FreeType
 TARGET = $(TARGETDIR)/libFreeType.a
 OBJDIR = bin-int/Release-linux-x86_64/FreeType
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -fPIC
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -fPIC
+ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -fPIC -w
+ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -fPIC -w
 ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64 -s
 
 endif
