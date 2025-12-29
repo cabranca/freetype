@@ -1,14 +1,18 @@
 project "FreeType"
     kind "StaticLib"
     language "C"
-    staticruntime "on" -- Importante para que coincida con tu Engine
+    staticruntime "on"
     warnings "Off"
 
-    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+    targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
     files {
-        -- Fuentes base (Coinciden con BASE_SRCS del CMake)
+        "inlcude/ft2build.h",
+        "include/freetype/*.h",
+        "include/freetype/config/*.h",
+        "include/freetype/internal/*.h",
+        --
         "src/autofit/autofit.c",
         "src/base/ftbase.c",
         "src/base/ftbbox.c",
@@ -41,7 +45,7 @@ project "FreeType"
         "src/pshinter/pshinter.c",
         "src/psnames/psnames.c",
         "src/raster/raster.c",
-        "src/sdf/sdf.c",         -- CRÍTICO para Game Engines (SDF rendering)
+        "src/sdf/sdf.c",
         "src/sfnt/sfnt.c",
         "src/smooth/smooth.c",
         "src/svg/svg.c",
@@ -49,14 +53,10 @@ project "FreeType"
         "src/type1/type1.c",
         "src/type42/type42.c",
         "src/winfonts/winfnt.c",
-
-        -- Headers para que aparezcan en tu IDE (Visual Studio/Rider)
-        "include/freetype/*.h",
-        "include/freetype/config/*.h"
     }
 
 
-    externalincludedirs { "include" }
+    includedirs { "include" }
 
     defines {
         "FT2_BUILD_LIBRARY" -- Necesario para compilar la lib interna
@@ -79,7 +79,7 @@ project "FreeType"
         }
 
     filter "system:macosx"
-        systemversion "latest"
+        systemversion "12.0"
         pic "on"
         
         files {
